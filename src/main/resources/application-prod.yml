@@ -11,6 +11,9 @@ server:
 spring:
   application:
     name: springboot-aws-dynamodb
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   security:
     ignored: /**
     oauth2:

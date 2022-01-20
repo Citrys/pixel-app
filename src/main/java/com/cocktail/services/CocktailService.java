@@ -19,11 +19,16 @@ import java.util.stream.StreamSupport;
 @Log4j2
 @Service
 public class CocktailService {
-    @Autowired
-    private CocktailRepository repository;
+
+    private final CocktailRepository repository;
+
+    private final CocktailSearchRepository esRepository;
 
     @Autowired
-    private CocktailSearchRepository esRepository;
+    CocktailService(CocktailRepository cocktailRepository, CocktailSearchRepository cocktailSearchRepository) {
+        this.repository = cocktailRepository;
+        this.esRepository = cocktailSearchRepository;
+    }
 
     public Cocktail save(CocktailDto cocktailDto) {
         Cocktail cock = createBookBuilder(cocktailDto).build();

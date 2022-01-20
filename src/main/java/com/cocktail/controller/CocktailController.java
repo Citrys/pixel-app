@@ -26,21 +26,6 @@ public class CocktailController {
         this.cocktailService = cocktailService;
     }
 
-    @GetMapping
-    public String getIndexPage(Model model, Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-                model.addAttribute("secretMessage", "Admin message is s3crEt");
-            } else {
-                model.addAttribute("secretMessage", "Lorem ipsum dolor sit amet");
-            }
-        }
-
-        model.addAttribute("message", "AWS Cognito with Spring Security");
-
-        return "index";
-    }
-
     @GetMapping("/cocktails")
     public List<Cocktail> getAllCocktails() {
         log.info("Retrieving all cocktails from the database");
@@ -60,6 +45,7 @@ public class CocktailController {
         return cocktailService.save(cocktailDto);
     }
 
+    @ResponseBody
     @PutMapping("/cocktail/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Cocktail updateCocktail(@PathVariable String id, @RequestBody CocktailDto cocktailDto) throws EntityNotFound {
@@ -67,6 +53,7 @@ public class CocktailController {
         return cocktailService.update(id, cocktailDto);
     }
 
+    @ResponseBody
     @DeleteMapping("/cocktail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response deleteCocktail(@PathVariable String id) {

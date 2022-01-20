@@ -49,7 +49,7 @@ class CocktailApplicationRestTests {
 				"\"description\": \"%s\"," +
 				"\"ingredients\": [\"%s\", \"%s\"]}", name, description, Ingredient.GIN, Ingredient.VODKA);
 
-		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/cocktail")
+		MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/service/cocktail")
 						.content(request)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(201))
@@ -59,7 +59,7 @@ class CocktailApplicationRestTests {
 
 	@Test
 	public void getCocktailById() throws Exception {
-		String res = String.format("/cocktail/%s", cocktailId);
+		String res = String.format("/service/cocktail/%s", cocktailId);
 		mvc.perform(MockMvcRequestBuilders.get(res).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name").value(name));
@@ -67,7 +67,7 @@ class CocktailApplicationRestTests {
 
 	@Test
 	public void getCocktails() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/cocktails").accept(MediaType.APPLICATION_JSON))
+		mvc.perform(MockMvcRequestBuilders.get("/service/cocktails").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(200));
 	}
 }

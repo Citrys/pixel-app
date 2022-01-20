@@ -1,0 +1,31 @@
+amazon:
+  aws:
+    accesskey: '*****'
+    region: 'eu-west-1'
+    secretkey: '*****'
+  dynamodb:
+    endpoint: 'https://localhost:443'
+server:
+  port: 9500
+  shutdown: graceful
+spring:
+  application:
+    name: springboot-aws-dynamodb
+  security:
+    ignored: /**
+    oauth2:
+      client:
+        registration:
+          cognito:
+            client-id: '*****'
+            cliensecret: '*****'
+            scope: openid, email
+            redirect-uri: http://localhost:9500/login/oauth2/code/cognito
+            clientName: cocktail-client-service
+        provider:
+          cognito:
+            issuerUri: https://cognito-idp.eu-west-1.amazonaws.com/*******
+            user-name-attribute: cognito:username
+
+cognito:
+  logoutUrl: https://****.auth.eu-central-1.amazoncognito.com/logout
